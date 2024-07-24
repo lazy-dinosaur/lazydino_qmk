@@ -43,6 +43,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define POINTING_DEVICE_AUTO_MOUSE_ENABLE
 
 #define AUTO_MOUSE_DEFAULT_LAYER 5
+#define AUTO_MOUSE_TIME 60
+#define AUTO_MOUSE_DEBOUNCE 10
+
 #define DOUBLE_TAP_SHIFT_TURNS_ON_CAPS_WORD
 
 #define TAPPING_TERM 200
@@ -51,9 +54,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #define PERMISSIVE_HOLD
 #define HOLD_ON_OTHER_KEY_PRESS_PER_KEY
-
-// #define AUTO_MOUSE_TIME 350
-#define AUTO_MOUSE_DEBOUNCE 60
 
 #define COMBO_ONLY_FROM_LAYER 0
 #define DOUBLE_TAP_SHIFT_TURNS_ON_CAPS_WORD
