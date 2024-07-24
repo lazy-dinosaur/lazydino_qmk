@@ -22,13 +22,6 @@ enum userspace_custom_keycodes {
     NUMWORD,
 };
 
-#define LAYER_DEF 0
-#define LAYER_NAV 1
-#define LAYER_FN 2
-#define LAYER_NUM 3
-#define LAYER_CONFIG 4
-#define LAYER_MOUSE 5
-
 bool is_num_word_enabled(void);
 void enable_num_word(void);
 void disable_num_word(void);
