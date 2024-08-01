@@ -28,7 +28,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define MOUSE_EXTENDED_REPORT
 
 // Limits the frequency that the sensor is polled for motion.
-#define POINTING_DEVICE_TASK_THROTTLE_MS 5
+#define POINTING_DEVICE_TASK_THROTTLE_MS 1
 
 // Adjust trackpad rotation.
 
@@ -42,24 +42,26 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define POINTING_DEVICE_GESTURES_CURSOR_GLIDE_ENABLE
 #define POINTING_DEVICE_AUTO_MOUSE_ENABLE
 
-#define AUTO_MOUSE_DEFAULT_LAYER 5
-#define AUTO_MOUSE_TIME 60
-#define AUTO_MOUSE_DEBOUNCE 10
+#define AUTO_MOUSE_DEFAULT_LAYER 4
+#define AUTO_MOUSE_TIME 70
+#define AUTO_MOUSE_DEBOUNCE 25
 
 #define DOUBLE_TAP_SHIFT_TURNS_ON_CAPS_WORD
+#define COMBO_SHOULD_TRIGGER
+#define COMBO_ONLY_FROM_LAYER 0
+#define COMBO_TERM 18
+#define COMBO_MUST_TAP_PER_COMBO
 
+#define USER_NUMWORD_ENABLE
 #define TAPPING_TERM 200
 #define TAPPING_TERM_PER_KEY
 #define QUICK_TAP_TERM 120
 
-#define PERMISSIVE_HOLD
+#define PERMISSIVE_HOLD_PER_KEY
 #define HOLD_ON_OTHER_KEY_PRESS_PER_KEY
 
-#define COMBO_ONLY_FROM_LAYER 0
 #define DOUBLE_TAP_SHIFT_TURNS_ON_CAPS_WORD
-#define COMBO_TERM 18
 
-#define USER_NUMWORD_ENABLE
 
 // #define USE_MATRIX_I2C
 
@@ -92,6 +94,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // #    define ENABLE_RGB_MATRIX_CYCLE_SPIRAL
 #endif
 
-#define DYNAMIC_KEYMAP_LAYER_COUNT 6
+#define DYNAMIC_KEYMAP_LAYER_COUNT 5
 #define SPLIT_LAYER_STATE_ENABLE
 #define SPLIT_LED_STATE_ENABLE

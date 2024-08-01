@@ -2,7 +2,6 @@
 #include QMK_KEYBOARD_H
 
 enum combos {
-    CB_CUT,
     CB_COPY,
     CB_PASTE,
     CB_LPAR,
@@ -29,7 +28,6 @@ enum combos {
 };
 
 /* Horizontal combos - left hand */
-const uint16_t PROGMEM cut_combo[]   = {KC_X, KC_V, COMBO_END};
 const uint16_t PROGMEM copy_combo[]  = {KC_X, KC_C, COMBO_END};
 const uint16_t PROGMEM paste_combo[] = {KC_C, KC_V, COMBO_END};
 
@@ -63,7 +61,6 @@ const uint16_t PROGMEM slsh_combo[] = {HOME_K, KC_COMM, COMBO_END};
 const uint16_t PROGMEM pipe_combo[] = {HOME_L, KC_DOT, COMBO_END};
 
 combo_t key_combos[] = {
-    [CB_CUT] = COMBO(cut_combo, C(KC_X)),
     [CB_COPY] = COMBO(copy_combo, C(KC_INS)),
     [CB_PASTE] = COMBO(paste_combo, S(KC_INS)),
     [CB_LPAR] = COMBO(lpar_combo, KC_LPRN),
@@ -92,7 +89,7 @@ combo_t key_combos[] = {
 bool combo_should_trigger(uint16_t combo_index, combo_t *combo, uint16_t keycode, keyrecord_t *record) {
     /* Disable combo `SOME_COMBO` on layer `_LAYER_A` */
     switch (combo_index) {
-        case (CB_LPAR || CB_RPAR || CB_RBTK ||CB_LBTK):
+        case CB_LPAR: case CB_RPAR: case CB_RBTK: case CB_LBTK:
             if (layer_state_is(LAYER_NAV)) {
                 return false;
             }
@@ -100,3 +97,23 @@ bool combo_should_trigger(uint16_t combo_index, combo_t *combo, uint16_t keycode
 
     return true;
 };
+
+bool get_combo_must_tap(uint16_t index, combo_t *combo) {
+    // If you want all combos to be tap-only, just uncomment the next line
+    // return true
+
+    // If you want *all* combos, that have Mod-Tap/Layer-Tap/Momentary keys in its chord, to be tap-only, this is for you:
+    uint16_t key;
+    uint8_t idx = 0;
+    while ((key = pgm_read_word(&combo->keys[idx])) != COMBO_END) {
+        switch (key) {
+            case QK_MOD_TAP...QK_MOD_TAP_MAX:
+            case QK_LAYER_TAP...QK_LAYER_TAP_MAX:
+            case QK_MOMENTARY...QK_MOMENTARY_MAX:
+                return true;
+        }
+        idx += 1;
+    }
+    return false;
+
+}
