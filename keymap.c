@@ -22,8 +22,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define LAYER_NAV 1
 #define LAYER_FN 2
 #define LAYER_NUM 3
-#define LAYER_CONFIG 4
-#define LAYER_MOUSE 5
+#define LAYER_MOUSE 4
 
 #define SMRT_SFT OSM(MOD_LSFT)
 
@@ -34,7 +33,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #define LT_ESC LT(LAYER_NAV, KC_ESC)
 #define LT_SPC LT(LAYER_FN, KC_SPC)
+#define LT_0 LT(LAYER_NAV, KC_0)
 #define CT_ESC CTL_T(KC_ESC)
+
 // Left-hand home row mods
 #define HOME_A LGUI_T(KC_A)
 #define HOME_S LALT_T(KC_S)
@@ -64,22 +65,22 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #define CANCEL KC_CANCEL
 
-
-
 void pointing_device_init_user(void) {
     set_auto_mouse_enable(true); // always required before the auto mouse feature will work
+    pointing_device_set_cpi(380);
 }
 
-#include "./mod_morph.c"
-#include "./combos.c"
 #include "./num_word.c"
 #include "./tap_dance.c"
+#include "./mod_morph.c"
+#include "./combos.c"
 
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case SMRT_SFT:
             return 200;
-
+        case LT_SPC:
+            return 150;
         default:
             return TAPPING_TERM;
     }
@@ -87,12 +88,18 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 
 bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        case CT_ESC:
-            // Immediately select the hold action when another key is tapped.
+        case CT_ESC: case LT_0:
             return true;
         default:
-            // Do not select the hold action when another key is tapped.
             return false;
+    }
+}
+
+bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        default:
+            // Do not select the hold action when another key is tapped.
+            return true;
     }
 }
 
@@ -135,7 +142,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                       //`--------------------------'  `--------------------------'
   ),
 
-
     [LAYER_NUM] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
       _______, _______,    KC_7,    KC_8,    KC_9, _______,                      _______, _______, _______, _______, _______, _______,
@@ -144,22 +150,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       _______, _______,    KC_1,    KC_2,    KC_3, _______,                      _______, _______, _______, _______, _______, _______,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          _______,    KC_0, _______,    _______,  CANCEL, _______
+                                          _______,    LT_0, _______,    _______, _______, _______
                                       //`--------------------------'  `--------------------------'
   ),
-
-    [LAYER_CONFIG] = LAYOUT_split_3x6_3(
-  //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-      _______, _______, _______, _______, _______,  EE_CLR,                       EE_CLR, _______, _______, _______, _______, _______,
-  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      RGB_TOG, RGB_HUI, RGB_SAI, RGB_VAI, _______, QK_BOOT,                      QK_BOOT, _______, _______, _______, _______, _______,
-  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      RGB_MOD, RGB_HUD, RGB_SAD, RGB_VAD, _______,  QK_RBT,                       QK_RBT, _______, _______, _______, _______, _______,
-  //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          _______, _______, _______,    _______, _______, _______
-                                      //`--------------------------'  `--------------------------'
-  ),
-
 
     [LAYER_MOUSE] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
