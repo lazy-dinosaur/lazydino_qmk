@@ -52,17 +52,25 @@ bool should_terminate_num_word(uint16_t keycode, const keyrecord_t *record) {
         // implicit"
         case KC_1 ... KC_0:
         case KC_EQL:
-        case KC_SCLN:
         case KC_MINS:
         case KC_DOT:
+        case KC_PLUS:
+        case KC_COMM:
+        case KC_TILD:
+        case KC_PERC:
+        case KC_LT:
+        case KC_GT:
+        case KC_CIRC:
+        case KC_DLR:
+
 
         // Numpad keycodes
-        case KC_P1 ... KC_P0:
-        case KC_PSLS ... KC_PPLS:
-        case KC_PDOT:
+        /* case KC_P1 ... KC_P0: */
+        /* case KC_PSLS ... KC_PPLS: */
+        /* case KC_PDOT: */
 
         // Misc
-        case KC_UNDS:
+        /* case KC_UNDS: */
         case KC_BSPC:
             return false;
 
@@ -113,10 +121,15 @@ bool process_record_num_word(uint16_t keycode, const keyrecord_t *record) {
         case QK_LAYER_TAP ... QK_LAYER_TAP_MAX:
         case QK_TAP_DANCE ... QK_TAP_DANCE_MAX:
             // Earlier return if this has not been considered tapped yet
-            if (record->tap.count == 0)
-                return true;
-            keycode = keycode & 0xFF;
-            break;
+            switch(keycode) {
+                case RCTL_T(KC_J): case RSFT_T(KC_K): case RALT_T(KC_L): case RGUI_T(KC_QUOT):
+                    break;
+                default:
+                    if (record->tap.count == 0)
+                        return true;
+                    keycode = keycode & 0xFF;
+                    break;
+            }
         default:
             break;
     }
